@@ -24,3 +24,20 @@ stack_t *create_stack(int n)
 
 	return (stack);
 }
+
+/**
+ * freestack - free stack
+ * @stack: stack
+ */
+void freestack(stack_t **stack)
+{
+	stack_t *temp;
+	int i;
+
+	while (*stack != NULL)
+	{
+		temp = *stack;
+		*stack = (*stack)->prev;
+		free(temp);
+	}
+}
