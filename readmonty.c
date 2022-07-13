@@ -40,13 +40,10 @@ void readmonty(char *buffer)
 			}
 			if (buffer[i] != ' ')
 				opline[j][l] = buffer[i], l++, set++; /* copy character and increment l */
-		}
-		set = 0;
+		} set = 0;
 		opline[j][l] = '\0', argument = opline[1]; /* set argument variable */
-		printf("argument is %s and length is %ld\n", argument, strlen(argument));
 		callfunction(&stack, line, opline), j = 0;
 	}
-
 	for (m = 0; opline[m]; m++) /* free mallocs */
 		free(opline[m]);
 	free(opline), freestack(&stack);
@@ -84,8 +81,8 @@ void callfunction(stack_t **stack, unsigned int line_number, char **opline)
 		{
 			if (opline[0][0] == '\0')
 				break;
-			else
-				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opline[0]), exit(EXIT_FAILURE);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opline[0]);
+			exit(EXIT_FAILURE);
 		}
 	}
 }
