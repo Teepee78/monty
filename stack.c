@@ -9,8 +9,6 @@ stack_t *create_stack(int n)
 {
 	stack_t *stack;
 
-	printf("entered create stack function\n");
-
 	stack = malloc(sizeof(stack_t));
 	if (stack == NULL)
 	{

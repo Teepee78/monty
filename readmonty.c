@@ -8,10 +8,10 @@ char *argument;
 void readmonty(char *buffer)
 {
 	char **opline;
-	int i, j = 0, l, m, line = 1;
+	int i, j = 0, l, m, line = 1, set = 0;
 	stack_t *stack = NULL;
 
-	opline = malloc(sizeof(char *) * 2);
+	opline = malloc(sizeof(char *) * 20);
 	if (opline == NULL)
 		fprintf(stderr, "Error: Unable to malloc\n"), exit(EXIT_FAILURE);
 
@@ -25,22 +25,25 @@ void readmonty(char *buffer)
 		} l = 0;
 		for (; buffer[i] != '\n'; i++) /* read till new line */
 		{
-			if (buffer[i] == ' ' && j < 1)
+			if (buffer[i] == ' ' && set == 0)
+				continue;
+			else if (buffer[i] == ' ')
 			{
 				opline[j][l] = '\0'; /* null terminate string */
-				j++;
+				j++, i++;
 				if (!opline[j])
 				{
 					opline[j] = malloc(sizeof(char) * 1024);
 					if (opline[j] == NULL)
 						fprintf(stderr, "Error: malloc failed\n"), exit(EXIT_FAILURE);
-				} l = 0;
+				} l = 0, set = 0;
 			}
-			if (buffer[i] == ' ') /* skip spaces */
-				continue;
-			opline[j][l] = buffer[i], l++; /* copy character and increment l */
+			if (buffer[i] != ' ')
+				opline[j][l] = buffer[i], l++, set++; /* copy character and increment l */
 		}
+		set = 0;
 		opline[j][l] = '\0', argument = opline[1]; /* set argument variable */
+		printf("argument is %s and length is %ld\n", argument, strlen(argument));
 		callfunction(&stack, line, opline), j = 0;
 	}
 
@@ -79,8 +82,10 @@ void callfunction(stack_t **stack, unsigned int line_number, char **opline)
 		}
 		if (opcodes[k + 1].opcode == NULL)
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opline[0]);
-			exit(EXIT_FAILURE);
+			if (opline[0][0] == '\0')
+				break;
+			else
+				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opline[0]), exit(EXIT_FAILURE);
 		}
 	}
 }
