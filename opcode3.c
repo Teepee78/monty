@@ -69,11 +69,11 @@ void pstr(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
 }
 
 /**
- * rotl - rotates the stack
+ * rotr - rotates the stack
  * @stack: stack
  * @line_number: line number
  */
-void rotl(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
+void rotr(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
 {
 	stack_t *temp = *stack, *temp2;
 
@@ -91,4 +91,28 @@ void rotl(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
 		temp->next = temp2;
 		temp = temp->prev;
 	}
+}
+
+/**
+ * rotl - rotates the stack
+ * @stack: stack
+ * @line_number: line number
+ */
+void rotl(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
+{
+	stack_t *temp = *stack, *temp2;
+
+	if (*stack == NULL)
+		return;
+
+	while (temp->prev != NULL) /* go to last node */
+		temp = temp->prev;
+
+	temp2 = temp;
+	temp->prev = *stack; /* add first node */
+	temp = temp->prev;
+	*stack = (*stack)->prev;
+	(*stack)->next = NULL;
+	temp->prev = NULL;
+	temp->next = temp2;
 }
