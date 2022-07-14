@@ -65,6 +65,10 @@ void callfunction(stack_t **stack, unsigned int line_number, char **opline)
 		{"pop", pop},
 		{"swap", swap},
 		{"add", add},
+		{"sub", sub},
+		{"div", divelem},
+		{"mul", multelem},
+		{"mod", modelem},
 		{"nop", nop},
 		{NULL, NULL}
 	};
