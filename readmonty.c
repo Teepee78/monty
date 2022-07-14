@@ -11,13 +11,6 @@ void readmonty(char *buffer)
 	int i = 0, line = 0;
 	stack_t *stack = NULL;
 
-	opline = malloc(sizeof(char) * 1024);
-	if (opline == NULL)
-		fprintf(stderr, "Error: Unable to malloc\n"), exit(EXIT_FAILURE);
-	oparg = malloc(sizeof(char) * 256);
-	if (oparg == NULL)
-		fprintf(stderr, "Error: Unable to malloc\n"), exit(EXIT_FAILURE);
-
 	opline = strtok(buffer, "\n"); /* split buffer into lines */
 	while (opline != NULL)
 	{
@@ -45,8 +38,6 @@ void readmonty(char *buffer)
 		line++, i = 0;
 		opline = strtok(NULL, "\n");
 	}
-	free(oparg); /* free mallocs */
-	free(opline), freestack(&stack);
 }
 
 /**
