@@ -48,3 +48,22 @@ void pchar(stack_t **stack, unsigned int line_number)
 
 	printf("%c\n", (*stack)->n);
 }
+
+/**
+ * pstr - prints a string starting from the top variable
+ * @stack: stack
+ * @line_number: line number
+ */
+void pstr(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
+{
+	stack_t *temp = *stack;
+
+	while (temp != NULL)
+	{
+		if (temp->n == 0 || !isascii(temp->n))
+			break;
+		printf("%c", temp->n);
+		temp = temp->prev;
+	}
+	printf("\n");
+}

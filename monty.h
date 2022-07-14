@@ -57,6 +57,7 @@ void divelem(stack_t **stack, unsigned int line_number);
 void multelem(stack_t **stack, unsigned int line_number);
 void modelem(stack_t **stack, unsigned int line_number);
 void pchar(stack_t **stack, unsigned int line_number);
+void pstr(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 
 void readmonty(char *buffer);
