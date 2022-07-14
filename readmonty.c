@@ -8,7 +8,7 @@ char *argument;
 void readmonty(char *buffer)
 {
 	char *opline, *oparg, *arg1;
-	int i = 0, line = 0;
+	int i = 0, line = 1;
 	stack_t *stack = NULL;
 
 	opline = strtok(buffer, "\n"); /* split buffer into lines */
