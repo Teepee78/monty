@@ -38,6 +38,7 @@ int main(int argc, __attribute__((unused)) char **argv)
 		fprintf(stderr, "Error: can't read file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+	buffer[readfile] = '\0'; /* null teminate */
 	readmonty(buffer);
 
 	free(buffer);

@@ -23,21 +23,19 @@ void readmonty(char *buffer)
 		oparg = strtok_r(opline, " ", &opline); /* split opline by spaces */
 		while (oparg != NULL && i < 2) /* get arguments */
 		{
-			switch (i)
-			{
-				case 0:
-					arg1 = oparg;
-					break;
-				case 1:
-					argument = oparg;
-					break;
-			} i++;
+			if (i == 0)
+				arg1 = oparg;
+			else if (i == 1)
+				argument = oparg;
+			i++;
 			oparg = strtok_r(NULL, " ", &opline);
 		}
 		callfunction(&stack, line, arg1);
 		line++, i = 0;
 		opline = strtok(NULL, "\n");
 	}
+	if (stack != NULL)
+		freestack(&stack);
 }
 
 /**
