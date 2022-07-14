@@ -6,7 +6,7 @@
  * @argv: argument variables
  * Return: EXIT_SUCCESS
  */
-int main(int argc, __attribute__((unused)) char **argv)
+int main(int argc, char **argv)
 {
 	int montyfile, readfile;
 	char *buffer;
