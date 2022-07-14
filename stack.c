@@ -30,7 +30,6 @@ stack_t *create_stack(int n)
 void freestack(stack_t **stack)
 {
 	stack_t *temp;
-	int i;
 
 	while (*stack != NULL)
 	{
