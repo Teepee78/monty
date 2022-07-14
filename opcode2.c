@@ -27,6 +27,7 @@ void add(stack_t **stack, unsigned int line_number)
  * @stack: stack
  * @line_number: line number
  */
-void nop(stack_t __attribute__((unused)) **stack, unsigned int __attribute__ ((unused)) line_number)
+void nop(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
 {
+	stack_t __attribute__ ((unused)) *stacks = *stack;
 }
