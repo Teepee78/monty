@@ -10,6 +10,11 @@ void pushnode(stack_t **stack, unsigned int line_number)
 	stack_t *new_stack;
 	int arg;
 
+	if (argument == NULL)
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
 	/* check if argument is a string */
 	if (_isdigit(argument))
 		arg = atoi(argument);

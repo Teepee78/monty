@@ -1,6 +1,6 @@
 #include "monty.h"
 
-char *argument;
+char *argument = NULL;
 /**
  * readmonty - reads monty file, line by line
  * @buffer: lines in monty file
@@ -14,6 +14,7 @@ void readmonty(char *buffer)
 	opline = strtok(buffer, "\n"); /* split buffer into lines */
 	while (opline != NULL)
 	{
+		argument = NULL;
 		if (opline[0] == '#') /* handle comments */
 		{
 			opline = strtok(NULL, "\n");
