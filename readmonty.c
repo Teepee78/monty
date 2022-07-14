@@ -38,8 +38,7 @@ void readmonty(char *buffer)
 				case 1:
 					argument = oparg;
 					break;
-			}
-			i++;
+			} i++;
 			oparg = strtok_r(NULL, " ", &opline);
 		}
 		callfunction(&stack, line, arg1);
