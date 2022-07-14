@@ -1,6 +1,8 @@
+swap
+push 1
+swap
+push 2
+push 3
 pall
-   push 1
-   nop
- push    2   c
-push   3
+swap
 pall
