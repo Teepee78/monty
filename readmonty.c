@@ -7,45 +7,46 @@ char *argument;
  */
 void readmonty(char *buffer)
 {
-	char **opline;
-	int i, j = 0, l, m, line = 1, set = 0;
+	char *opline, *oparg, *arg1;
+	int i = 0, line = 0;
 	stack_t *stack = NULL;
 
-	opline = malloc(sizeof(char *) * 20);
+	opline = malloc(sizeof(char) * 1024);
 	if (opline == NULL)
 		fprintf(stderr, "Error: Unable to malloc\n"), exit(EXIT_FAILURE);
+	oparg = malloc(sizeof(char) * 256);
+	if (oparg == NULL)
+		fprintf(stderr, "Error: Unable to malloc\n"), exit(EXIT_FAILURE);
 
-	for (i = 0; buffer[i]; i++, line++) /* iterate through file */
+	opline = strtok(buffer, "\n"); /* split buffer into lines */
+	while (opline != NULL)
 	{
-		if (!opline[j])
+		if (opline[0] == '#') /* handle comments */
 		{
-			opline[j] = malloc(sizeof(char) * 1024);
-			if (opline[j] == NULL)
-				fprintf(stderr, "Error: malloc failed\n"), exit(EXIT_FAILURE);
-		} l = 0;
-		for (; buffer[i] != '\n'; i++) /* read till new line */
+			opline = strtok(NULL, "\n");
+			line++, i = 0;
+			continue;
+		}
+		oparg = strtok_r(opline, " ", &opline); /* split opline by spaces */
+		while (oparg != NULL && i < 2) /* get arguments */
 		{
-			if (buffer[i] == ' ' && set == 0)
-				continue;
-			else if (buffer[i] == ' ')
+			switch (i)
 			{
-				opline[j][l] = '\0'; /* null terminate string */
-				j++, i++;
-				if (!opline[j])
-				{
-					opline[j] = malloc(sizeof(char) * 1024);
-					if (opline[j] == NULL)
-						fprintf(stderr, "Error: malloc failed\n"), exit(EXIT_FAILURE);
-				} l = 0, set = 0;
+				case 0:
+					arg1 = oparg;
+					break;
+				case 1:
+					argument = oparg;
+					break;
 			}
-			if (buffer[i] != ' ')
-				opline[j][l] = buffer[i], l++, set++; /* copy character and increment l */
-		} set = 0;
-		opline[j][l] = '\0', argument = opline[1]; /* set argument variable */
-		callfunction(&stack, line, opline), j = 0;
+			i++;
+			oparg = strtok_r(NULL, " ", &opline);
+		}
+		callfunction(&stack, line, arg1);
+		line++, i = 0;
+		opline = strtok(NULL, "\n");
 	}
-	for (m = 0; opline[m]; m++) /* free mallocs */
-		free(opline[m]);
+	free(oparg); /* free mallocs */
 	free(opline), freestack(&stack);
 }
 
@@ -53,9 +54,9 @@ void readmonty(char *buffer)
  * callfunction - finds the right function and calls it
  * @stack:  stack
  * @line_number: line number
- * @opline: array of arguments
+ * @arg1: arg1
  */
-void callfunction(stack_t **stack, unsigned int line_number, char **opline)
+void callfunction(stack_t **stack, unsigned int line_number, char *arg1)
 {
 	int k;
 	instruction_t opcodes[] = {
@@ -76,16 +77,14 @@ void callfunction(stack_t **stack, unsigned int line_number, char **opline)
 	/* find the right function */
 	for (k = 0; opcodes[k].opcode != NULL; k++)
 	{
-		if (strcmp(opcodes[k].opcode, opline[0]) == 0)
+		if (strcmp(opcodes[k].opcode, arg1) == 0)
 		{
 			opcodes[k].f(stack, line_number);
 			break;
 		}
 		if (opcodes[k + 1].opcode == NULL)
 		{
-			if (opline[0][0] == '\0')
-				break;
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opline[0]);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, arg1);
 			exit(EXIT_FAILURE);
 		}
 	}

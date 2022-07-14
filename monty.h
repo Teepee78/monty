@@ -2,6 +2,7 @@
 #define MONT_Y
 
 #define BUFFSIZE 4096
+#define _GNU_SOURCE /* strtok_r */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -58,7 +59,7 @@ void modelem(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
 
 void readmonty(char *buffer);
-void callfunction(stack_t **stack, unsigned int line_number, char **opline);
+void callfunction(stack_t **stack, unsigned int line_number, char *arg1);
 stack_t *create_stack(int n);
 void freestack(stack_t **stack);
 int _isdigit(char *string);
