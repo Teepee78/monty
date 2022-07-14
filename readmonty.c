@@ -61,6 +61,7 @@ void callfunction(stack_t **stack, unsigned int line_number, char *arg1)
 		{"mod", modelem},
 		{"pchar", pchar},
 		{"pstr", pstr},
+		{"rotl", rotl},
 		{"nop", nop},
 		{NULL, NULL}
 	};

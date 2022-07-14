@@ -67,3 +67,28 @@ void pstr(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
 	}
 	printf("\n");
 }
+
+/**
+ * rotl - rotates the stack
+ * @stack: stack
+ * @line_number: line number
+ */
+void rotl(stack_t **stack, unsigned int __attribute__ ((unused)) line_number)
+{
+	stack_t *temp = *stack, *temp2;
+
+	if (*stack == NULL)
+		return;
+
+	while (temp->prev != NULL) /* go to last node */
+		temp = temp->prev;
+
+	*stack = temp;
+	while (temp != NULL)
+	{
+		temp2 = temp->prev;
+		temp->prev = temp->next;
+		temp->next = temp2;
+		temp = temp->prev;
+	}
+}
