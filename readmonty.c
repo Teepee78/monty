@@ -15,12 +15,6 @@ void readmonty(char *buffer)
 	while (opline != NULL)
 	{
 		argument = NULL;
-		if (opline[0] == '#') /* handle comments */
-		{
-			opline = strtok(NULL, "\n");
-			line++, i = 0;
-			continue;
-		}
 		oparg = strtok_r(opline, " ", &opline); /* split opline by spaces */
 		while (oparg != NULL && i < 2) /* get arguments */
 		{
@@ -30,6 +24,12 @@ void readmonty(char *buffer)
 				argument = oparg;
 			i++;
 			oparg = strtok_r(NULL, " ", &opline);
+		}
+		if (arg1[0] == '#') /* handle comments */
+		{
+			opline = strtok(NULL, "\n");
+			line++, i = 0;
+			continue;
 		}
 		callfunction(&stack, line, arg1);
 		line++, i = 0;
